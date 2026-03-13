@@ -1,0 +1,74 @@
+-- 1. Preparação do Ambiente
+DROP DATABASE IF EXISTS artistas_spotify;
+CREATE DATABASE artistas_spotify;
+USE artistas_spotify;
+
+-- 2. Criação das Tabelas
+CREATE TABLE artistas (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE albuns (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(100) NOT NULL,
+    ano_lancamento INT,
+    artista_id INT,
+    FOREIGN KEY (artista_id) REFERENCES artistas(id)
+);
+
+CREATE TABLE musicas (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(100) NOT NULL,
+    duracao_segundos INT,
+    album_id INT,
+    FOREIGN KEY (album_id) REFERENCES albuns(id)
+);
+
+-- 3. Inserindo Dados do Mazakenji
+INSERT INTO artistas (nome) VALUES ('Mazakenji');
+
+-- Inserindo os Álbuns/EPs
+INSERT INTO albuns (titulo, ano_lancamento, artista_id) VALUES 
+('Adeus, Magenta', 2023, 1),
+('O Titã', 2022, 1);
+
+-- Inserindo Músicas (IDs: Adeus Magenta = 1, O Titã = 2)
+INSERT INTO musicas (titulo, duracao_segundos, album_id) VALUES 
+-- Do EP Adeus, Magenta
+('Magenta (PT I e II)', 435, 1),
+('Jalapeño (Me chamou)', 296, 1),
+('Amarula', 210, 1),
+-- Do álbum O Titã
+('Princesa', 190, 2),
+('Eu nem toco banjo ¯\_(ツ)_/¯', 185, 2),
+('Cytotec', 171, 2);
+
+-- 4. Query para ver tudo organizado (com formatação de tempo)
+SELECT 
+    a.titulo AS Album,
+    m.titulo AS Musica,
+    CONCAT(FLOOR(m.duracao_segundos/60), ':', LPAD(MOD(m.duracao_segundos,60), 2, '0')) AS Tempo
+FROM musicas m
+JOIN albuns a ON m.album_id = a.id
+ORDER BY a.titulo, m.titulo;
+
+-- Inserindo o restante das músicas do EP: Adeus, Magenta (ID 1)
+INSERT INTO musicas (titulo, duracao_segundos, album_id) VALUES 
+('A Gente se Vê (Ou Não)', 188, 1);
+
+-- Inserindo o restante das músicas do álbum: O Titã (ID 2)
+INSERT INTO musicas (titulo, duracao_segundos, album_id) VALUES 
+('O Titã', 198, 2),
+('Sexta-feira (Interlúdio)', 74, 2),
+('A Cor de Saturno', 165, 2),
+('Vênus', 212, 2),
+('Talvez eu seja um pouco dramático', 145, 2);
+
+SELECT 
+    a.titulo AS Album,
+    m.titulo AS Musica,
+    CONCAT(FLOOR(m.duracao_segundos/60), ':', LPAD(MOD(m.duracao_segundos,60), 2, '0')) AS Duracao
+FROM musicas m
+JOIN albuns a ON m.album_id = a.id
+ORDER BY a.ano_lancamento DESC, m.id ASC;
