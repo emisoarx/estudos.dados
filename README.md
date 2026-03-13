@@ -36,6 +36,14 @@ Atualmente, estou aplicando meus conhecimentos de banco de dados para o meu **TC
 
 ---
 
+### ☁️ Cloud Roadmap
+- [ ] **Fundamentals:** Entender IaaS, PaaS e SaaS.
+- [ ] **Segurança:** Estudar IAM (Identity and Access Management) para o TCC.
+- [ ] **Dados na Nuvem:** Subir um banco MySQL para o Google Cloud SQL ou AWS RDS.
+
+---
+
+
 ## 🤝 Contato & Conexões
 - **Nickname:** `emi.exe`
 - **LinkedIn:** [emisoares](https://www.linkedin.com/in/emisoares/)
